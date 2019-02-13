@@ -1,3 +1,8 @@
 Spree::Core::Engine.add_routes do
-  # Add your extension routes here
+  namespace :admin do
+    resources :appointments
+  end
+
+  get '/g_redirect', to: 'calender_oauth#redirect', as: 'g_redirect'
+  get '/g_callback', to: 'calender_oauth#callback', as: 'g_callback'
 end

@@ -1,0 +1,35 @@
+<div class="modal fade" id="new_event">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Create New Event</h4>
+      </div>
+      <div class="modal-body" data-hook="admin_appointment_new_form">
+        <div data-hook="admin_appointment_new_form_header">
+          <%= render 'spree/shared/error_messages', target: @appointment %>
+        </div>
+
+         <%= form_for [:admin, @appointment], remote: true  do |f| %>
+          <div class="row">
+            <div class="col-md-12">
+              <%= render 'form', f: f %>
+
+              <div class="form-actions" data-hook="buttons">
+                <%= button Spree.t('actions.create'), 'ok', 'submit', {class: 'btn-success', data: { disable_with: "#{ Spree.t(:saving) }..." }} %>
+                <!-- <span class="or"><%= Spree.t(:or) %></span> -->
+                 <%= link_to 'Delete', 
+                            [:admin,@appointment], 
+                            method: :delete, 
+                            class: 'btn btn-danger', 
+                            data: { confirm: 'Are you sure?' }, 
+                            remote: true unless @appointment.new_record? %>
+              </div>
+             
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

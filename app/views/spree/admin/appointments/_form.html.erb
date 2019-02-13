@@ -1,0 +1,28 @@
+<div data-hook="admin_appointment_form_fields" class="row">
+  <div class="col-md-6">
+    <%= f.field_container :title, class: ['form-group'] do %>
+      <%= f.label :title %>
+      <%= f.text_field :title, class: 'form-control' %>
+      <%= error_message_on :appointment, :title %>
+    <% end %>
+
+    <%= f.field_container :date_range, class: ['form-group'] do %>
+      <%= f.label :date_range %>
+      <%= f.text_field :date_range, class: 'form-control date-range-picker' %>
+      <%= error_message_on :appointment, :date_range %>
+    <% end %>
+
+    <%= f.field_container :start, class: ['form-group'] do %>
+      <%= f.label :start %>
+      <%= f.text_field :start,value: Date.today, class: 'form-control start_hidden' %>
+      <%= error_message_on :appointment, :start %>
+    <% end %>
+
+    <%= f.field_container :end, class: ['form-group'] do %>
+      <%= f.label :end %>
+      <%= f.text_field :end,value: Date.today, class: 'form-control end_hidden' %>
+      <%= error_message_on :appointment, :end %>
+    <% end %>
+
+  </div>
+</div>

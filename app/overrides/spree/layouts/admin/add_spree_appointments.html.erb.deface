@@ -1,0 +1,6 @@
+<!-- insert_bottom "[data-hook='admin_tabs']" -->
+<% if can? :admin, Spree::Appointment %>
+  <ul class="nav nav-sidebar">
+    <%= tab(:appointments, icon: "edit") %>
+  </ul>
+<% end %>

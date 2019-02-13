@@ -1,0 +1,13 @@
+it:
+  spree:
+    admin:
+      tab:
+        appointments: "Appointments"
+    new_appointment: "Nuovo Appointment"
+    listing_appointments: "Lista Appointments"
+    editing_appointment: "Modifica Appointment"
+  activerecord:
+    attributes:
+      spree/appointment:
+        status: Status
+        ap_date: Ap Date

@@ -1,0 +1,14 @@
+<ul>
+  <% @event_list.items.each do |event| %>
+    <li><%= event.summary %> (<%= event.id %>)</li>
+  <% end %>
+</ul>
+
+<div id="calendar"></div>
+<div id='remote_container'></div>
+
+<style>
+	.modal-dialog {
+    	left: auto;
+	}
+</style>
