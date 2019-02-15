@@ -3,10 +3,6 @@ module Spree
     class AppointmentsController < ResourceController
 
 		def index
-			service = ::GoogleCalenderClient.instance.client
-
-		    @calendar_list = service.list_calendar_lists
-		    @event_list = service.list_events('omsolutionpk@gmail.com')
 			@appointments = Spree::Appointment.where(start: params[:start]..params[:end])
 
 			respond_to do |format|

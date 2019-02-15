@@ -2,21 +2,27 @@ class GoogleCalenderClient
   include Singleton
 
 	def client
-		existing_token = Current.user.google_client 
-		c = Signet::OAuth2::Client.new client_options
-		c.update!(existing_token)
+		existing_token = Current.user.google_client
+		@client = nil
 
-		if c.issued_at > 1.hour.ago
-			response = c.refresh!
-			new_token = existing_token.merge(response)
-			u = Current.user
-			u.google_client = new_token
-			u.save!
+		if existing_token.present? 
+			c = Signet::OAuth2::Client.new client_options
+			c.update!(existing_token)
+
+			if c.issued_at > 1.hour.ago
+				response = c.refresh!
+				new_token = existing_token.merge(response)
+				u = Current.user
+				u.google_client = new_token
+				u.save!
+			end
+
+			@client ||= Google::Apis::CalendarV3::CalendarService.new
+			@client.authorization = c
 		end
 
-		@client ||= Google::Apis::CalendarV3::CalendarService.new
-		@client.authorization = c
 		@client
+
 	end
 
 	def client_options
