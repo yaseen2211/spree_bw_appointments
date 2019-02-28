@@ -1,8 +1,41 @@
 module Spree
   class Appointment < Spree::Base
     attr_accessor :date_range
+
+    enum state: [:created,:booked,:confirmed,:active,:complete]
+
   	validates :title, presence: true
-    after_save :sync_with_google_calender
+    # after_save :sync_with_google_calender
+    belongs_to :vendor
+    has_many :user_appointments, class_name: 'Spree::UserAppointment'
+    has_many :users, through: :user_appointments, class_name: 'Spree::User'
+
+    state_machine :state, :initial => :created do
+
+      # POSSIBLE_STATES = Spree::Appointment.states.keys.map{|s|s.to_sym}
+
+      event :set_created do
+        transition :created => :created
+      end
+
+      event :set_booked do
+        transition :created => :booked
+      end
+
+      event :set_confirmed do
+        transition :booked => :confirmed
+      end
+
+      event :set_active do
+        transition :confirmed => :active
+      end
+
+      event :set_completed do
+        transition :active => :completed
+      end
+
+      
+    end
 
   	def all_day_event?
     	self.start == self.start.midnight && self.end == self.end.midnight ? true : false

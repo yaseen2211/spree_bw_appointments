@@ -3,7 +3,7 @@ module Spree
     class AppointmentsController < ResourceController
 
 		def index
-			@appointments = Spree::Appointment.where(start: params[:start]..params[:end])
+			@appointments = current_spree_vendor.present? && current_spree_vendor.appointments.present? ? current_spree_vendor.appointments.where(start: params[:start]..params[:end]) : []
 
 			respond_to do |format|
 				format.html
@@ -15,7 +15,16 @@ module Spree
 
 		def create
 			@appointment = Spree::Appointment.new(appointment_params)
-			@appointment.save
+
+			if (current_spree_vendor.present?) && (current_spree_vendor.is_appointable)
+				@appointment.vendor = current_spree_vendor 
+				@appointment.save
+
+			elsif (current_spree_vendor.present?) && (current_spree_vendor.is_appointable == false)
+				raise Exception.new('Permission denied. Can not create appointment due to appointable check false.')
+			else
+				raise Exception.new('Vendor must be present?')
+			end
 		end
 
 		def update
@@ -29,7 +38,7 @@ module Spree
 		private
 		
 		def appointment_params
-		  params.require(:appointment).permit(:title, :date_range, :start, :end, :color)
+		  params.require(:appointment).permit(:title,:start, :end, :color,:state)
 		end
     end
   end

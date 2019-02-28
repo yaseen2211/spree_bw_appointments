@@ -13,8 +13,6 @@ gem 'rails-controller-testing'
 gem 'rubocop', require: false
 gem 'rubocop-rspec', require: false
 gem 'spree_multi_vendor', github: 'spree-contrib/spree_multi_vendor'
-gem 'fullcalendar-rails'
-gem 'momentjs-rails'
 gem 'bootstrap-daterangepicker-rails'
 gem 'jbuilder', '~> 2.0'
 
@@ -24,3 +22,6 @@ end
 gem 'google-api-client', require: 'google/apis/calendar_v3'
 
 gemspec
+
+
+
